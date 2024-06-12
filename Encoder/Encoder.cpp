@@ -57,34 +57,3 @@ float Encoder::_calculate_angular_velocity() {
 int Encoder::_get_count() {
     return _position;
 }
-
-EncoderController::EncoderController(int pulse) : _pulse(pulse) {}
-
-Encoder* EncoderController::addEncoder(PinName pinA, PinName pinB) {
-    Encoder* encoder = new Encoder(pinA, pinB, _pulse);
-    encoders.push_back(encoder);
-    return encoder;
-}
-
-vector<float> EncoderController::get_all_angular_velocity() {
-    const int encoder_num = encoders.size();
-    vector<float> velocity(encoder_num);
-    for (int i = 0; i < encoder_num; i++) {
-        velocity[i] = encoders[i]->get_angular_velocity();
-    }
-    return velocity;
-}
-
-vector<float> EncoderController::get_inrange_angular_velocity(int start, int end) {
-    //const int encoder_num = encoders.size();
-    //if (end < start || encoder_num < end || start < 0) return vector<float> null;
-    vector<float> velocity((end-start)+1);
-    for (int i = start; i <= end; i++) {
-        velocity[i] = encoders[i]->get_angular_velocity();
-    }
-    return velocity;
-}
-
-float EncoderController::get_angular_velocity(Encoder* encoder) {
-    return encoder -> get_angular_velocity();
-}
