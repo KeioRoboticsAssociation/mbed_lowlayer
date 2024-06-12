@@ -3,10 +3,10 @@
 #include "mbed.h"
 
 // コンストラクタ
-Motor::Motor(PinName pwm_pin, PinName dir_pin, EncoderController* encoder_controller, PinName encA, PinName encB, int pulse) 
-    : pwm(pwm_pin), dir(dir_pin), encoder_controller(encoder_controller), _pulse(pulse),
+Motor::Motor(PinName pwm_pin, PinName dir_pin, PinName encA, PinName encB, int pulse) 
+    : pwm(pwm_pin), dir(dir_pin), _pulse(pulse),
       Kp(0.1), Ki(0.0), Kd(0.0), integral(0), previousError(0), targetVelocity(0.0f) {
-    encoder = encoder_controller->addEncoder(encA, encB);
+    encoder = new Encoder(encA, encB, pulse);
     controlTicker.attach(callback(this, &Motor::updateControl), 100ms); // 0.1秒ごとに制御を更新
 }
 
@@ -45,20 +45,16 @@ void Motor::updateControl() {
     previousError = error;
 }
 
-MotorController::MotorController(int pulse) : _pulse(pulse), encoder_controller(pulse) {}
+MotorController::MotorController(int pulse) : _pulse(pulse) {}
 
 Motor* MotorController::addMovingWeel(PinName pwm_pin, PinName dir_pin, PinName encA, PinName encB) {
-    Motor* motor = new Motor(pwm_pin, dir_pin, &encoder_controller, encA, encB, _pulse);
+    Motor* motor = new Motor(pwm_pin, dir_pin, encA, encB, _pulse);
     MovingWeel.push_back(motor);
     return motor;
 }
 
 Encoder* MotorController::addMeasureWeel(PinName encA, PinName encB) {
-    Encoder* encoder = encoder_controller.addEncoder(encA, encB);
+    Encoder* encoder = new Encoder(encA, encB, _pulse);
     MeasureWeel.push_back(encoder);
     return encoder;
-}
-
-float EncoderController::get_angular_velocity(Encoder* encoder) {
-    return encoder -> get_angular_velocity();
 }
