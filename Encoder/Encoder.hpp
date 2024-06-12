@@ -30,22 +30,3 @@ private:
     // 角速度を計算するための内部メソッド
     float _calculate_angular_velocity();
 };
-
-class EncoderController {
-public:
-    //コンストラクタ
-    EncoderController(int pulse);
-
-    Encoder* addEncoder(PinName pinA, PinName pinB);
-
-    //すべてのモーターの角速度を入手するメソッド
-    vector<float> get_all_angular_velocity();
-
-    vector<float> get_inrange_angular_velocity(int start, int end);
-
-    float get_angular_velocity(Encoder* encoder);
-
-private:
-    int _pulse;
-    vector<Encoder*> encoders;
-};
