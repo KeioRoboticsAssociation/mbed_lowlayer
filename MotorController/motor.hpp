@@ -7,7 +7,7 @@
 class Motor {
 public:
     // コンストラクタ
-    Motor(PinName pwm_pin, PinName dir_pin, EncoderController* encoder_controller, PinName encA, PinName encB, int pulse);
+    Motor(PinName pwm_pin, PinName dir_pin, PinName encA, PinName encB, int pulse);
 
     // デストラクタ
     ~Motor();
@@ -22,7 +22,6 @@ private:
     PwmOut pwm;
     DigitalOut dir;
     Encoder* encoder;
-    EncoderController* encoder_controller;
     Ticker controlTicker;
     int _pulse;
     float Kp, Ki, Kd;
@@ -35,11 +34,9 @@ public:
     MotorController(int pulse);
     Motor* addMovingWeel(PinName pwm_pin, PinName dir_pin, PinName encA, PinName encB);
     Encoder* addMeasureWeel(PinName encA, PinName encB);
-    float get_angular_velocity(Encoder* encoder);
 
 private:
     int _pulse;
     std::vector<Motor*> MovingWeel;
     std::vector<Encoder*> MeasureWeel;
-    EncoderController encoder_controller;
 };
