@@ -15,7 +15,6 @@ main.cppの最初のほうに
 ```
 
 の文章を追加すればOK
-基本的にオドメトリ(自己位置推定)用のエンコーダーを使う理由がないならEncoderのほうは書かなくてもいい。
 
 # How to use
 MotorController編
@@ -40,6 +39,11 @@ addMeasureWeel(PinName encA, PinName encB);
 Motor* -> setTargetVelocity(float target_velocity);
 ```
   float型で値を入れると指定したモーターの角速度がtarget_velocityになるようにPID制御してくれる。
+
+```bash
+Encoder* -> get_angular_velocity();
+```
+  Encoderの角速度を返してくれる。しかし、前回の速度出力からの平均速度なので注意。
 
 
 環境構築方法は横のurlより
