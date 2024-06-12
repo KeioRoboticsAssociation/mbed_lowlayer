@@ -46,13 +46,14 @@ Encoder* -> get_angular_velocity();
   Encoderの角速度を返してくれる。しかし、前回の速度出力からの平均速度なので注意。戻り値はfloat。
 
 使用例
-'''bash
+
+```bash
 MotorController motorcontroller(2048);
 Motor* movingweel = motorcontroller.addMovingWeel(PA_10,PB_7,PA_12,PC_1);
 Encoder* measureweel = motorcontroller.addMeasureWeel(PB_1,PC_0);
 movingweel -> setTargetVelocity(3.0f);
 float speed = measureweel -> get_angular_velocity();
-'''
+```
 
 環境構築方法は横のurlより
 https://kra.kibe.la/notes/5555
